@@ -877,435 +877,420 @@ class LedgerService:
         }
 
 
-HTML_PAGE = """<!DOCTYPE html>
+HTML_PAGE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Donation Transparency Ledger</title>
   <style>
-    :root {
-      --bg: #f4f6f9;
-      --card: #ffffff;
-      --text: #18212f;
-      --muted: #5a6577;
-      --border: #dce2ec;
-      --primary: #1d4ed8;
-      --primary-hover: #1e40af;
-      --success-bg: #ecfdf5;
-      --success-border: #10b981;
-      --success-text: #065f46;
-      --error-bg: #fef2f2;
-      --error-border: #ef4444;
-      --error-text: #991b1b;
-      --warn-bg: #fffbeb;
-      --warn-border: #f59e0b;
-      --warn-text: #92400e;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-    .container { max-width: 1120px; margin: 24px auto; padding: 0 16px 40px; }
-    header {
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 12px; margin-bottom: 18px;
-    }
-    h1 { margin: 0; font-size: 1.65rem; }
-    .subtitle { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
-      border: 1px solid var(--border); background: var(--card);
-    }
-    .pill.ok { border-color: var(--success-border); background: var(--success-bg); color: var(--success-text); }
-    .pill.manager { border-color: #6366f1; background: #eef2ff; color: #3730a3; }
-    .pill.donor { border-color: var(--warn-border); background: var(--warn-bg); color: var(--warn-text); }
-    .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-    }
-    .card h2 { margin: 0 0 12px; font-size: 1.1rem; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
-    .stat-box {
-      border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: #fafbfd;
-    }
-    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
-    .stat-value { font-size: 1.25rem; font-weight: 700; margin-top: 4px; word-break: break-all; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86rem; }
-    label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 5px; }
-    input, select {
-      width: 100%; padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px;
-      font-size: 0.94rem; margin-bottom: 11px; background: #fff;
-    }
-    button {
-      padding: 9px 15px; border: none; border-radius: 8px; font-size: 0.92rem;
-      font-weight: 600; cursor: pointer; background: var(--primary); color: #fff;
-    }
-    button:hover { background: var(--primary-hover); }
-    button.secondary { background: #334155; }
-    button.secondary:hover { background: #1e293b; }
-    button.danger-test { background: #b45309; }
-    button.danger-test:hover { background: #92400e; }
-    .row-inline { display: flex; gap: 10px; align-items: end; flex-wrap: wrap; }
-    .row-inline > div { flex: 1; min-width: 220px; }
-    .alert {
-      border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; border: 1px solid;
-      display: none;
-    }
-    .alert.show { display: block; }
-    .alert.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
-    .alert.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error-text); }
-    .alert.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-text); display: block; margin-bottom: 10px; font-size: 0.88rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
-    th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; }
-    .empty { color: var(--muted); font-style: italic; padding: 8px 0; }
+    :root { --bg:#f5f7f5; --card:#fff; --text:#1d3029; --muted:#64766d; --border:#e0e8e2; --primary:#207451; --primary-hover:#155b3d; --success-bg:#edf8f0; --success-border:#b2d9bd; --success-text:#205f36; --error-bg:#fff1ef; --error-border:#edb5ad; --error-text:#9c3024; --warn-bg:#fff8e9; --warn-border:#ebd6a8; --warn-text:#805e21; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:24px; }
+    body { margin:0; font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
+    a { color:inherit; text-decoration:none; }
+    .skip-link { position:absolute; left:20px; top:-70px; background:white; padding:12px; z-index:10; }
+    .skip-link:focus { top:12px; }
+    .topbar { background:white; border-bottom:1px solid var(--border); padding:20px max(24px,calc((100vw - 1240px)/2)); display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { display:flex; align-items:center; gap:12px; font-size:19px; font-weight:750; letter-spacing:-.6px; }
+    .brand-mark { width:38px; height:38px; display:grid; place-items:center; background:var(--primary); border-radius:12px; color:white; font-size:24px; }
+    .brand small { display:block; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; font-weight:600; }
+    nav { display:flex; gap:26px; font-size:13px; color:var(--muted); }
+    nav a:hover { color:var(--primary); }
+    .container { max-width:1240px; margin:36px auto; padding:0 24px 24px; }
+    header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-bottom:28px; }
+    h1 { margin:6px 0; font-size:clamp(26px,4vw,36px); font-weight:650; letter-spacing:-1.2px; }
+    .eyebrow { font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--primary); }
+    .subtitle,.description { color:var(--muted); font-size:14px; margin:6px 0 20px; }
+    .subtitle { margin:0; }
+    #networkBadges { display:flex; flex-wrap:wrap; gap:8px; }
+    .pill { display:inline-flex; align-items:center; padding:6px 10px; border-radius:6px; font-size:11px; font-weight:600; border:1px solid var(--border); background:white; }
+    .pill.ok { background:var(--success-bg); color:var(--success-text); border-color:var(--success-border); }
+    .pill.manager { background:#edf3ff; color:#34547f; }
+    .pill.donor { color:var(--warn-text); background:var(--warn-bg); }
+    .hero { display:grid; grid-template-columns:1fr auto; align-items:center; gap:24px; background:#173f30; color:#fff; border-radius:18px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden; }
+    .hero h2 { font-size:clamp(24px,3vw,32px); letter-spacing:-.8px; font-weight:550; margin:8px 0; }
+    .hero p { color:#c2d7ca; max-width:590px; font-size:14px; margin:0; }
+    .hero .eyebrow { color:#b8d99f; }
+    .hero-symbol { width:112px; height:112px; border:1px solid #60826d; border-radius:50%; display:grid; place-items:center; font-size:48px; color:#c9e7ad; box-shadow:0 0 0 16px #ffffff06,0 0 0 32px #ffffff04; margin:0 24px; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:20px; min-width:0; }
+    .card h2 { font-size:17px; letter-spacing:-.3px; margin:0 0 18px; font-weight:650; }
+    .section-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .section-heading h2 { margin:0; }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .stat-box { border:1px solid var(--border); border-radius:12px; padding:22px; background:#fafcf9; }
+    .stat-box:first-child { background:#eef6ec; border-color:#d2e3cb; }
+    .stat-label { font-size:12px; color:var(--muted); }
+    .stat-value { font-size:clamp(22px,3vw,30px); font-weight:650; margin-top:10px; letter-spacing:-1px; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+    .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; overflow-wrap:anywhere; }
+    label { display:block; font-size:12px; font-weight:600; margin-bottom:7px; }
+    input,select { width:100%; min-width:0; padding:12px; border:1px solid #d8e2da; border-radius:8px; font-size:14px; margin-bottom:16px; color:var(--text); background:#fff; min-height:44px; }
+    button { padding:11px 18px; border:1px solid transparent; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; background:var(--primary); color:white; min-height:44px; transition:background .15s; }
+    button:hover { background:var(--primary-hover); }
+    button.secondary { background:white; border-color:var(--border); color:var(--text); }
+    button.secondary:hover { background:#edf3ed; }
+    button.danger-test { background:#916318; }
+    button:disabled { opacity:.55; cursor:wait; }
+    :focus-visible { outline:3px solid #7eb69a; outline-offset:3px; }
+    .row-inline { display:flex; gap:14px; align-items:end; flex-wrap:wrap; }
+    .row-inline > div { flex:1; min-width:200px; }
+    .alert { border-radius:10px; padding:14px 18px; margin-bottom:20px; border:1px solid; display:none; overflow-wrap:anywhere; font-size:13px; }
+    .alert.show { display:block; }
+    .alert.success { background:var(--success-bg); border-color:var(--success-border); color:var(--success-text); }
+    .alert.error { background:var(--error-bg); border-color:var(--error-border); color:var(--error-text); }
+    .alert.warn { background:var(--warn-bg); border-color:var(--warn-border); color:var(--warn-text); display:block; font-size:12px; }
+    .table-scroll { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th,td { text-align:left; padding:14px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+    th { color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.6px; background:#f7faf7; white-space:nowrap; }
+    td strong { white-space:nowrap; font-weight:600; }
+    tbody tr:hover { background:#fafcf9; }
+    #eventsTable td:nth-child(3) { min-width:240px; max-width:520px; }
+    .empty { color:var(--muted); text-align:center; padding:40px 20px; border:1px dashed var(--border); border-radius:10px; font-size:13px; }
+    .quick-amounts { display:flex; gap:8px; margin:0 0 24px; flex-wrap:wrap; }
+    .quick-amounts button { flex:1; }
+    .donation-card { display:flex; flex-direction:column; }
+    .donation-note { margin-top:auto; padding-top:28px; font-size:12px; color:var(--muted); }
+    details { border-top:1px solid var(--border); padding-top:16px; margin-top:6px; }
+    summary { cursor:pointer; font-size:13px; color:var(--primary); font-weight:600; margin-bottom:12px; }
+    .contract-meta { margin-top:18px; color:var(--muted); display:grid; gap:6px; }
+    footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:11px; color:var(--muted); padding:12px 0; }
+    @media(max-width:800px) { .grid-2 { grid-template-columns:1fr; gap:0; } .topbar { padding:16px 20px; } nav { gap:16px; } .hero-symbol { display:none; } .hero { grid-template-columns:1fr; padding:26px; } .stats { gap:10px; } .stat-box { padding:16px; } }
+    @media(max-width:540px) { .container { padding:0 16px; margin-top:24px; } .topbar { align-items:flex-start; } nav { flex-direction:column; gap:4px; font-size:11px; } .card { padding:18px; } .stats { grid-template-columns:1fr; } .stat-box { display:flex; align-items:center; justify-content:space-between; gap:12px; } .stat-value { margin:0; } .row-inline > div { min-width:0; flex-basis:100%; } .row-inline button { width:100%; } .section-heading { flex-wrap:wrap; } }
+    .account-meta { font-size:13px; color:var(--muted); margin-bottom:12px; }
+    .role-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:6px 0 18px; }
+    .role-cards article { padding:18px; border:1px solid var(--border); border-radius:12px; background:#fafcf9; }
+    .role-cards article.selected { border-color:var(--primary); background:#edf8f0; box-shadow:inset 0 0 0 1px var(--primary); }
+    .role-cards h3 { font-size:15px; margin:12px 0 6px; }
+    .role-cards p { font-size:12px; color:var(--muted); margin:0; }
+    input[readonly] { background:#f5f7f5; font-weight:600; }
+    @media(max-width:700px) { .role-cards { grid-template-columns:1fr; } }
+    .allocation { display:flex; align-items:center; gap:16px; margin-top:20px; font-size:12px; color:var(--muted); }
+    .allocation-track { flex:1; height:8px; border-radius:8px; background:#e9eee8; overflow:hidden; }
+    #allocationBar { height:100%; background:#36835e; border-radius:8px; }
+    .contract-meta { display:flex; justify-content:space-between; flex-wrap:wrap; font-size:13px; }
+    #actionsGrid > .card { border-top:3px solid #bad3ad; }
+    .card { box-shadow:0 3px 14px #173f3003; }
+    .hero { background:radial-gradient(ellipse at top right,#31664a,transparent 65%),#173f30; }
+    .table-scroll td { overflow-wrap:anywhere; max-width:240px; }
+    .table-scroll td:first-child { color:var(--muted); }
+    button:disabled { cursor:not-allowed; }
+    .quick-amounts button[aria-pressed="true"] { background:#edf8f0; border-color:var(--primary); color:var(--primary); }
+    #connectionSettings { margin-top:20px; }
+    #eventsCard details { border:0; padding:0; margin:0; }
+    #eventsCard summary { margin:0; }
+    #eventsCard details[open] summary { margin-bottom:18px; }
+    [hidden] { display:none !important; }
+    @media(max-width:540px) { .allocation { flex-direction:column; align-items:stretch; gap:8px; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } button { transition:none; } }
   </style>
 </head>
 <body>
-  <div class="container">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="topbar">
+    <a class="brand" href="#main"><span class="brand-mark" aria-hidden="true">↗</span><span>ClearFund<small>Donation transparency ledger</small></span></a>
+    <nav aria-label="Main navigation"><a href="#connectionCard">Accounts</a><a href="#summaryCard">Overview</a><a href="#ledgersGrid">History</a></nav>
+  </div>
+  <main class="container" id="main">
     <header>
       <div>
-        <h1>Donation Transparency Ledger</h1>
-        <p class="subtitle">DS 441 A Mini Project &mdash; Ganache Local Blockchain &amp; Python web3.py</p>
+        <div class="eyebrow">Every contribution, accounted for</div><h1>Give with purpose. Follow the impact.</h1>
+        <p class="subtitle">Manage contributions and see how funds are used, all in one place.</p>
       </div>
-      <div id="networkBadges"></div>
+      <div id="networkBadges" aria-live="polite"><span class="pill">Connecting…</span></div>
     </header>
 
-    <div class="card">
-      <h2>1. Wallet Account &amp; Contract Connection (Ganache)</h2>
+    <section class="hero" aria-label="About the fund">
+      <div><div class="eyebrow">CLEARFUND · COMMUNITY FUND</div><h2>Every contribution makes a difference.</h2><p>Support your community with confidence. Every contribution and expense is recorded publicly and can be verified.</p></div>
+      <div class="hero-symbol" aria-hidden="true">↗</div>
+    </section>
+    <div class="card" id="connectionCard">
+      <div class="section-heading"><h2>Choose your role</h2><button class="secondary" onclick="refreshDashboard()">↻ Refresh</button></div>
       <div class="row-inline">
         <div>
-          <label for="activeAccount">Active Ganache Account (Acting Wallet)</label>
+          <label for="activeAccount">Active account</label>
           <select id="activeAccount" onchange="updateRoleUI()"></select>
-        </div>
-        <div>
-          <label for="contractAddressInput">Deployed Contract Address</label>
-          <input id="contractAddressInput" class="mono" placeholder="0x... (from Remix or Deploy button)" />
-        </div>
-        <div style="flex: 0 0 auto; margin-bottom: 11px;">
-          <button class="secondary" onclick="loadExistingContract()">Load Contract</button>
+          <div id="accountMeta" class="account-meta"></div>
         </div>
       </div>
-      <div class="row-inline" style="margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--border);">
-        <div>
-          <label for="deployCause">Or Deploy New Contract Directly to Ganache (using Active Account as Manager)</label>
-          <input id="deployCause" value="Community Flood Relief Fund" placeholder="Enter named cause..." />
+      <div class="role-cards" aria-label="Fixed account roles">
+        <article data-account-role="0"><span class="pill manager">Manager</span><h3>Manage the fund</h3><p>Ganache account #0 · Creates funds and approves expenses.</p></article>
+        <article data-account-role="1"><span class="pill ok">Donor</span><h3>Support the cause</h3><p>Ganache account #1 · Makes contributions to the fund.</p></article>
+        <article data-account-role="2"><span class="pill donor">Recipient</span><h3>Receive support</h3><p>Ganache account #2 · Receives approved payments.</p></article>
+      </div>
+      <p class="description">Account identities are fixed. Select a role above to use its available actions.</p>
+      <div id="assignmentNotice" class="alert warn" hidden></div>
+      <details id="connectionSettings"><summary>Fund settings</summary><p class="description">Connect an existing fund or create a new one to get started.</p><div class="row-inline"><div>
+          <label for="contractAddressInput">Fund contract address</label>
+          <input id="contractAddressInput" class="mono" placeholder="0x… deployed contract address" />
         </div>
         <div style="flex: 0 0 auto; margin-bottom: 11px;">
-          <button onclick="deployNewContract()">Deploy Contract</button>
+          <button class="secondary" onclick="loadExistingContract()">Connect fund</button>
         </div>
       </div>
-      <div id="accountMeta" class="mono" style="color: var(--muted); margin-top: 4px;"></div>
+      <details><summary>Create a new fund</summary><p class="description">Select Manager to create a fund. The fixed Manager account will manage all new funds.</p><div class="row-inline">
+        <div>
+          <label for="deployCause">Fund name</label>
+          <input id="deployCause" value="Community Flood Relief Fund" placeholder="Enter a fund name…" />
+        </div>
+        <div style="flex: 0 0 auto; margin-bottom: 11px;">
+          <button id="deployBtn" onclick="deployNewContract()">Create fund</button>
+        </div>
+      </div>
+      </details>
+      </details>
     </div>
 
-    <div id="txStatusBox" class="alert"></div>
+    <div id="txStatusBox" class="alert" role="status" aria-live="polite" tabindex="-1"></div>
+    <div id="setupNotice" class="empty" style="margin-bottom:20px;">Welcome to ClearFund. Open Fund settings to connect or create your first fund.</div>
 
     <div class="card" id="summaryCard" style="display:none;">
-      <h2>2. Contract State &amp; Transparency Summary</h2>
+      <div class="eyebrow">Fund overview</div><h2 id="sumCause" style="font-size:24px; margin-top:6px;">—</h2>
       <div class="stats">
         <div class="stat-box">
-          <div class="stat-label">Named Cause</div>
-          <div class="stat-value" id="sumCause">-</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-label">Contract Balance</div>
+          <div class="stat-label">Available balance</div>
           <div class="stat-value" id="sumBalance">0 ETH</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Total Donated</div>
+          <div class="stat-label">Total contributions</div>
           <div class="stat-value" id="sumDonated">0 ETH</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Total Spent</div>
+          <div class="stat-label">Funds distributed</div>
           <div class="stat-value" id="sumSpent">0 ETH</div>
         </div>
       </div>
-      <div class="mono" style="margin-top: 12px; color: var(--muted);">
-        Contract: <span id="sumContractAddr">-</span> &nbsp;|&nbsp;
-        Manager: <span id="sumManager">-</span>
-      </div>
+      <div class="contract-meta"><span>Manager: <strong id="sumManager">—</strong></span><span id="activityCount"></span></div><div class="allocation"><div class="allocation-track"><div id="allocationBar"></div></div><span id="allocationLabel"></span></div>
     </div>
 
     <div class="grid-2" id="actionsGrid" style="display:none;">
-      <div class="card">
-        <h2>3. Donate Test Ether (Anyone)</h2>
-        <label for="donateAmount">Donation Amount (ETH)</label>
-        <input id="donateAmount" type="number" step="0.01" min="0" value="2" />
-        <button onclick="submitDonation()">Send Donation</button>
+      <div class="card donation-card">
+        <h2>Make a contribution</h2><p class="description">Choose how much to contribute. Follow your confirmed donation in the history below.</p>
+        <p id="donorNotice" class="description"></p><label for="donateAmount">Donation amount (ETH)</label>
+        <input id="donateAmount" type="number" step="any" min="0.000000000000000001" inputmode="decimal" value="2" />
+        <div class="quick-amounts" aria-label="Suggested amounts"><button class="secondary" onclick="setDonation('0.1')">0.1 ETH</button><button class="secondary" onclick="setDonation('0.5')">0.5 ETH</button><button class="secondary" onclick="setDonation('1')">1 ETH</button><button class="secondary" onclick="setDonation('2')">2 ETH</button></div>
+        <button id="donateBtn" onclick="submitDonation()">Donate now ↗</button><p class="donation-note">Local test network · Test Ether only.<br>Transactions are recorded publicly after confirmation.</p>
       </div>
 
       <div class="card">
-        <h2>4. Record Controlled Expense (Manager Only)</h2>
+        <h2>Record an expense</h2>
         <div id="roleNotice" class="alert warn"></div>
-        <label for="recipientPreset">Select Recipient Preset (or enter custom address below)</label>
-        <select id="recipientPreset" onchange="syncRecipientFromPreset()"></select>
-        <label for="spendRecipient">Recipient Address</label>
-        <input id="spendRecipient" class="mono" placeholder="0x..." />
-        <label for="spendAmount">Expense Amount (ETH)</label>
-        <input id="spendAmount" type="number" step="0.01" min="0" value="0.5" />
-        <label for="spendPurpose">Expense Purpose</label>
-        <input id="spendPurpose" placeholder="e.g., Medical supplies and clean water" value="Medical supplies for flood relief" />
-        <button id="spendBtn" onclick="submitSpend()">Record Expense (Spend)</button>
+        <label for="recipientName">Payment recipient</label>
+        <input id="recipientName" value="Recipient" readonly />
+        <p class="description">All payments from this interface go to the fixed Recipient account.</p>
+        <label for="spendAmount">Expense amount (ETH)</label>
+        <input id="spendAmount" type="number" step="any" min="0.000000000000000001" inputmode="decimal" value="0.5" />
+        <label for="spendPurpose">Expense purpose</label>
+        <input id="spendPurpose" placeholder="e.g. Medical supplies and clean water" value="" />
+        <button id="spendBtn" onclick="submitSpend()">Confirm expense</button>
       </div>
     </div>
 
     <div class="grid-2" id="ledgersGrid" style="display:none;">
       <div class="card">
-        <h2>Recorded Expenses (Amount &amp; Purpose)</h2>
-        <div id="expensesTable"></div>
+        <h2>Expense history</h2>
+        <div id="expensesTable" class="table-scroll" tabindex="0" role="region" aria-label="Expense history"></div>
       </div>
       <div class="card">
-        <h2>Recorded Donations</h2>
-        <div id="donationsTable"></div>
+        <h2>Donation history</h2>
+        <div id="donationsTable" class="table-scroll" tabindex="0" role="region" aria-label="Donation history"></div>
       </div>
     </div>
 
     <div class="card" id="eventsCard" style="display:none;">
-      <h2>On-Chain Event Logs</h2>
-      <div id="eventsTable"></div>
+      <details><summary>Blockchain confirmation log</summary>
+      <div id="eventsTable" class="table-scroll" tabindex="0" role="region" aria-label="Confirmation log"></div></details>
     </div>
-  </div>
+    <footer><span>ClearFund · Donation Transparency Ledger</span><span>Local Ganache network · Test Ether only</span></footer>
+  </main>
 
   <script>
     let appState = null;
-
-    async function apiCall(path, method = "GET", body = null) {
-      const opts = { method, headers: { "Content-Type": "application/json" } };
+    let busy = false;
+    let online = false;
+    const $ = id => document.getElementById(id);
+    const same = (a, b) => Boolean(a && b && a.toLowerCase() === b.toLowerCase());
+    const escapeHtml = value => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+    const roleAccounts = () => (appState?.accounts || []).filter(a => a.index < 3);
+    const assignedAccount = index => appState?.accounts.find(a => a.index === index);
+    function accountName(address) {
+      if (!address) return 'No account selected';
+      const account = appState?.accounts.find(a => same(a.address, address));
+      if (account) return ['Manager', 'Donor', 'Recipient'][account.index] || `Account ${account.index + 1}`;
+      let hash = 2166136261;
+      for (const char of address.toLowerCase()) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619);
+      return `Guest ${(hash >>> 0).toString(36).toUpperCase()}`;
+    }
+    function setDonation(amount) {
+      $('donateAmount').value = amount;
+      document.querySelectorAll('.quick-amounts button').forEach(button => button.setAttribute('aria-pressed', String(button.textContent === amount + ' ETH')));
+    }
+    $('donateAmount').addEventListener('input', () => setDonation($('donateAmount').value));
+    function updateRoleUI() {
+      const address = $('activeAccount').value;
+      const account = roleAccounts().find(a => same(a.address, address));
+      document.querySelectorAll('[data-account-role]').forEach(card => card.classList.toggle('selected', Number(card.dataset.accountRole) === account?.index));
+      const isManager = account?.index === 0;
+      const isDonor = account?.index === 1;
+      const matchesManager = same(assignedAccount(0)?.address, appState?.summary?.manager);
+      const canSpend = isManager && matchesManager && Boolean(assignedAccount(2));
+      $('accountMeta').textContent = account ? `${accountName(address)} · Balance: ${account.balanceEth} ETH` : 'No assigned account available';
+      $('roleNotice').textContent = canSpend ? 'You are the Manager. Review the amount and purpose before sending funds to the Recipient.' : 'Only the assigned Manager can record expenses. Select Manager to continue.';
+      $('roleNotice').className = 'alert ' + (canSpend ? 'show success' : 'warn');
+      $('donorNotice').textContent = isDonor ? 'Your contribution will be recorded under Donor.' : 'Select Donor to make a contribution.';
+      $('donateBtn').disabled = busy || !online || !isDonor || !appState?.contractLoaded;
+      $('donateAmount').disabled = $('donateBtn').disabled;
+      document.querySelectorAll('.quick-amounts button').forEach(button => button.disabled = $('donateBtn').disabled);
+      $('deployBtn').disabled = busy || !online || !isManager;
+      $('spendBtn').disabled = busy || !online || !canSpend;
+      for (const id of ['spendAmount', 'spendPurpose']) $(id).disabled = $('spendBtn').disabled;
+      const mismatch = appState?.contractLoaded && !matchesManager;
+      const missing = appState && roleAccounts().length < 3;
+      $('assignmentNotice').hidden = !mismatch && !missing;
+      $('assignmentNotice').textContent = missing ? 'This demo needs Ganache accounts #0, #1 and #2. Restore the missing accounts and refresh.' : mismatch ? `This fund is managed by ${accountName(appState.summary.manager)}, not the assigned Manager. Expense payments are disabled. Connect a fund created by Manager or create a new fund with Manager selected.` : '';
+      $('networkBadges').innerHTML = online ? '<span class="pill ok">● Connected · Test network</span>' : '<span class="pill donor">Offline · Select Refresh to retry</span>';
+    }
+    function showStatus(ok, title, body) {
+      const box = $('txStatusBox');
+      box.className = 'alert show ' + (ok ? 'success' : 'error');
+      box.innerHTML = `<strong>${escapeHtml(title)}</strong><div>${body}</div>`;
+      box.focus({preventScroll: true});
+      box.scrollIntoView({block:'nearest', behavior:'auto'});
+    }
+    async function apiCall(path, method = 'GET', body = null) {
+      const opts = {method, headers:{'Content-Type':'application/json'}};
       if (body !== null) opts.body = JSON.stringify(body);
-      const res = await fetch(path, opts);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Request failed");
+      const response = await fetch(path, opts);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Unable to complete the request.');
       return data;
     }
-
-    function showStatus(ok, title, htmlBody) {
-      const box = document.getElementById("txStatusBox");
-      box.className = "alert show " + (ok ? "success" : "error");
-      box.innerHTML = `<strong>${escapeHtml(title)}</strong><div style="margin-top:6px;">${htmlBody}</div>`;
+    function friendlyError(error) {
+      let message = error.message;
+      const reasons = {
+        'Only manager can spend':'Only the fund manager can record expenses.',
+        'Insufficient contract balance':'The fund balance is too low. Enter a smaller amount.',
+        'Donation must be greater than zero':'The donation amount must be greater than zero.',
+        'Failed to fetch':'Unable to reach the server. Check your connection and refresh.'
+      };
+      for (const [reason, translation] of Object.entries(reasons)) if (message.includes(reason)) return escapeHtml(translation);
+      message = message.replace(/0x[a-fA-F0-9]{40}\b/g, address => accountName(address));
+      return escapeHtml(message);
     }
-
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
-    }
-
-    function shortAddr(addr) {
-      if (!addr || addr.length < 12) return addr || "";
-      return addr.slice(0, 8) + "..." + addr.slice(-6);
-    }
-
-    function syncRecipientFromPreset() {
-      const val = document.getElementById("recipientPreset").value;
-      if (val) document.getElementById("spendRecipient").value = val;
-    }
-
-    function updateRoleUI() {
-      if (!appState) return;
-      const select = document.getElementById("activeAccount");
-      const activeAddr = select.value;
-      const acc = appState.accounts.find(a => a.address === activeAddr);
-      const summary = appState.summary;
-
-      const meta = document.getElementById("accountMeta");
-      if (acc) {
-        meta.textContent = `Selected: ${acc.address} | Wallet Balance: ${acc.balanceEth} ETH`;
+    function renderState() {
+      const previous = $('activeAccount').value;
+      const options = roleAccounts().map(a => `<option value="${escapeHtml(a.address)}">${escapeHtml(accountName(a.address))}</option>`).join('');
+      $('activeAccount').innerHTML = options;
+      if (roleAccounts().some(a => same(a.address, previous))) $('activeAccount').value = previous;
+      else $('activeAccount').value = (appState.contractLoaded ? assignedAccount(1)?.address : assignedAccount(0)?.address) || '';
+      if (appState.contractAddress) $('contractAddressInput').value = appState.contractAddress;
+      const loaded = appState.contractLoaded;
+      $('setupNotice').style.display = loaded ? 'none' : 'block';
+      if (!loaded) $('connectionSettings').open = true;
+      for (const id of ['summaryCard','actionsGrid','ledgersGrid','eventsCard']) $(id).style.display = loaded ? (id.endsWith('Grid') ? 'grid' : 'block') : 'none';
+      if (loaded) {
+        const summary = appState.summary;
+        $('sumCause').textContent = summary.cause;
+        $('sumBalance').textContent = summary.balanceEth + ' ETH';
+        $('sumDonated').textContent = summary.totalDonatedEth + ' ETH';
+        $('sumSpent').textContent = summary.totalSpentEth + ' ETH';
+        $('sumManager').textContent = accountName(summary.manager);
+        $('activityCount').textContent = `${summary.donationCount} contributions · ${summary.expenseCount} expenses`;
+        const percent = Number(summary.totalDonatedEth) > 0 ? Math.min(100, Number(summary.totalSpentEth) / Number(summary.totalDonatedEth) * 100) : 0;
+        $('allocationBar').style.width = percent + '%';
+        $('allocationLabel').textContent = `${percent.toLocaleString('en-US', {maximumFractionDigits:1})}% of contributions distributed`;
+        renderTables();
       }
-
-      const badges = document.getElementById("networkBadges");
-      const netBadge = `<span class="pill ok">Ganache Connected &bull; Chain ID ${appState.chainId}</span>`;
-      let roleBadge = "";
-      if (summary) {
-        const isMgr = activeAddr.toLowerCase() === summary.manager.toLowerCase();
-        roleBadge = isMgr
-          ? `<span class="pill manager">Role: MANAGER (Authorized)</span>`
-          : `<span class="pill donor">Role: DONOR / NON-MANAGER</span>`;
-
-        const notice = document.getElementById("roleNotice");
-        const spendBtn = document.getElementById("spendBtn");
-        if (isMgr) {
-          notice.textContent = "Authorized Manager selected. Valid spending transactions will succeed.";
-          spendBtn.className = "";
-        } else {
-          notice.textContent = "Non-Manager selected. Button remains enabled intentionally so you can verify on-chain rejection by the Smart Contract.";
-          spendBtn.className = "danger-test";
-        }
-      }
-      badges.innerHTML = netBadge + " " + roleBadge;
-    }
-
-    async function refreshState() {
-      const prevActive = document.getElementById("activeAccount").value;
-      const prevRecipient = document.getElementById("spendRecipient").value;
-      appState = await apiCall("/api/state");
-
-      const activeSelect = document.getElementById("activeAccount");
-      activeSelect.innerHTML = appState.accounts.map(a => {
-        const tag = a.isManager ? " [MANAGER]" : "";
-        return `<option value="${a.address}">Account #${a.index}${tag} (${shortAddr(a.address)}) - ${a.balanceEth} ETH</option>`;
-      }).join("");
-      if (prevActive && appState.accounts.some(a => a.address === prevActive)) {
-        activeSelect.value = prevActive;
-      } else if (appState.accounts.length > 1 && appState.contractLoaded) {
-        activeSelect.value = appState.accounts[1].address;
-      }
-
-      const recPreset = document.getElementById("recipientPreset");
-      recPreset.innerHTML = `<option value="">-- Custom Address --</option>` + appState.accounts.map(a =>
-        `<option value="${a.address}">Account #${a.index} (${shortAddr(a.address)}) - ${a.balanceEth} ETH</option>`
-      ).join("");
-      if (!prevRecipient && appState.accounts.length > 2) {
-        recPreset.value = appState.accounts[2].address;
-        document.getElementById("spendRecipient").value = appState.accounts[2].address;
-      } else if (prevRecipient) {
-        document.getElementById("spendRecipient").value = prevRecipient;
-      }
-
-      if (appState.contractAddress) {
-        document.getElementById("contractAddressInput").value = appState.contractAddress;
-      }
-
-      const show = appState.contractLoaded;
-      document.getElementById("summaryCard").style.display = show ? "block" : "none";
-      document.getElementById("actionsGrid").style.display = show ? "grid" : "none";
-      document.getElementById("ledgersGrid").style.display = show ? "grid" : "none";
-      document.getElementById("eventsCard").style.display = show ? "block" : "none";
-
-      if (show && appState.summary) {
-        const s = appState.summary;
-        document.getElementById("sumCause").textContent = s.cause;
-        document.getElementById("sumBalance").textContent = s.balanceEth + " ETH";
-        document.getElementById("sumDonated").textContent = s.totalDonatedEth + " ETH";
-        document.getElementById("sumSpent").textContent = s.totalSpentEth + " ETH";
-        document.getElementById("sumContractAddr").textContent = appState.contractAddress;
-        document.getElementById("sumManager").textContent = s.manager;
-        renderTables(appState.expenses, appState.donations, appState.events);
-      }
-
       updateRoleUI();
     }
-
-    function renderTables(expenses, donations, events) {
-      const expEl = document.getElementById("expensesTable");
-      if (!expenses.length) {
-        expEl.innerHTML = `<div class="empty">No expenses recorded yet.</div>`;
-      } else {
-        expEl.innerHTML = `<table><thead><tr><th>ID</th><th>Recipient</th><th>Amount</th><th>Purpose</th><th>Time</th></tr></thead><tbody>` +
-          expenses.map(e => `<tr>
-            <td>#${e.id}</td>
-            <td class="mono" title="${e.recipient}">${shortAddr(e.recipient)}</td>
-            <td><strong>${e.amountEth} ETH</strong></td>
-            <td>${escapeHtml(e.purpose)}</td>
-            <td>${e.timestamp}</td>
-          </tr>`).join("") + `</tbody></table>`;
-      }
-
-      const donEl = document.getElementById("donationsTable");
-      if (!donations.length) {
-        donEl.innerHTML = `<div class="empty">No donations recorded yet.</div>`;
-      } else {
-        donEl.innerHTML = `<table><thead><tr><th>ID</th><th>Donor</th><th>Amount</th><th>Time</th></tr></thead><tbody>` +
-          donations.map(d => `<tr>
-            <td>#${d.id}</td>
-            <td class="mono" title="${d.donor}">${shortAddr(d.donor)}</td>
-            <td><strong>${d.amountEth} ETH</strong></td>
-            <td>${d.timestamp}</td>
-          </tr>`).join("") + `</tbody></table>`;
-      }
-
-      const evtEl = document.getElementById("eventsTable");
-      if (!events.length) {
-        evtEl.innerHTML = `<div class="empty">No contract events emitted yet.</div>`;
-      } else {
-        evtEl.innerHTML = `<table><thead><tr><th>Block</th><th>Event</th><th>Details</th><th>Tx Hash</th></tr></thead><tbody>` +
-          events.map(ev => `<tr>
-            <td>#${ev.blockNumber}</td>
-            <td><strong>${escapeHtml(ev.event)}</strong></td>
-            <td class="mono">${escapeHtml(JSON.stringify(ev.args))}</td>
-            <td class="mono" title="${ev.txHash}">${shortAddr(ev.txHash)}</td>
-          </tr>`).join("") + `</tbody></table>`;
-      }
+    function table(id, headings, rows, empty) {
+      $(id).innerHTML = rows.length ? `<table><thead><tr>${headings.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(row => '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>').join('')}</tbody></table>` : `<div class="empty">${empty}</div>`;
     }
-
+    function renderTables() {
+      table('expensesTable', ['ID','Recipient','Amount','Purpose','Time'], appState.expenses.map(e => [escapeHtml('#'+e.id),escapeHtml(accountName(e.recipient)),`<strong>${escapeHtml(e.amountEth)} ETH</strong>`,escapeHtml(e.purpose),escapeHtml(e.timestamp)]), 'No expenses yet. Confirmed payments will appear here.');
+      table('donationsTable', ['ID','Donor','Amount','Time'], appState.donations.map(d => [escapeHtml('#'+d.id),escapeHtml(accountName(d.donor)),`<strong>${escapeHtml(d.amountEth)} ETH</strong>`,escapeHtml(d.timestamp)]), 'No donations yet. Be the first to support this fund.');
+      const labels = {CauseInitialized:'Fund created', DonationReceived:'Donation received', ExpenseRecorded:'Expense paid'};
+      table('eventsTable', ['Block','Activity','Details','Transaction hash'], appState.events.map(event => {
+        const a = event.args;
+        const detail = event.event === 'CauseInitialized' ? `${accountName(a.manager)} created ${a.cause}` : event.event === 'DonationReceived' ? `${accountName(a.donor)} contributed ${a.amountEth} ETH` : `${accountName(a.recipient)} received ${a.amountEth} ETH · ${a.purpose}`;
+        return [escapeHtml('#'+event.blockNumber), escapeHtml(labels[event.event] || event.event), escapeHtml(detail), `<details><summary>View hash</summary><span class="mono">${escapeHtml(event.txHash)}</span></details>`];
+      }), 'No confirmed activity yet.');
+    }
+    async function refreshState() {
+      try { appState = await apiCall('/api/state'); online = true; renderState(); }
+      catch (error) { online = false; updateRoleUI(); throw error; }
+    }
+    async function refreshDashboard() {
+      try { await refreshState(); }
+      catch (error) { showStatus(false, 'Unable to refresh data', friendlyError(error) + '<br>Displayed data may be out of date.'); }
+    }
+    function amountValid(id) {
+      const input = $(id);
+      if (!input.value || !Number.isFinite(Number(input.value)) || Number(input.value) <= 0) {
+        showStatus(false, 'Invalid amount', 'Enter an ETH amount greater than zero.');
+        return false;
+      }
+      return true;
+    }
+    async function transact(path, payload, title, describe) {
+      let result;
+      try { result = await apiCall(path, 'POST', payload); }
+      catch (error) { showStatus(false, 'Request not completed', friendlyError(error)); return; }
+      let warning = '';
+      try { await refreshState(); }
+      catch (_) { warning = '<br>The transaction succeeded, but balances could not be refreshed. Select Refresh to retry; do not submit the transaction again.'; }
+      showStatus(true, title, describe(result) + warning);
+    }
     async function loadExistingContract() {
-      const address = document.getElementById("contractAddressInput").value.trim();
-      try {
-        const res = await apiCall("/api/load", "POST", { address });
-        await refreshState();
-        showStatus(true, "Contract Loaded", `Connected to contract <span class="mono">${escapeHtml(res.contractAddress)}</span>.`);
-      } catch (err) {
-        showStatus(false, "Failed to Load Contract", escapeHtml(err.message));
-      }
+      const address = $('contractAddressInput').value.trim();
+      if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return showStatus(false, 'Invalid contract address', 'Enter a contract address starting with 0x followed by 40 hexadecimal characters.');
+      await transact('/api/load', {address}, 'Fund connected', () => 'You can now view the overview, contribute, and follow the fund history.');
     }
-
     async function deployNewContract() {
-      const from = document.getElementById("activeAccount").value;
-      const cause = document.getElementById("deployCause").value.trim();
-      try {
-        const res = await apiCall("/api/deploy", "POST", { from, cause });
-        await refreshState();
-        showStatus(
-          true,
-          "Contract Deployed Successfully",
-          `Address: <span class="mono">${escapeHtml(res.contractAddress)}</span><br/>Manager: <span class="mono">${escapeHtml(res.manager)}</span><br/>Tx Hash: <span class="mono">${escapeHtml(res.txHash)}</span>`
-        );
-      } catch (err) {
-        showStatus(false, "Deployment Failed", escapeHtml(err.message));
-      }
+      if (!same($('activeAccount').value, assignedAccount(0)?.address)) return showStatus(false, 'Manager required', 'Select Manager to create a fund.');
+      const cause = $('deployCause').value.trim();
+      if (!cause) return showStatus(false, 'Fund name required', 'Enter a name that describes the purpose of this fund.');
+      await transact('/api/deploy', {from:$('activeAccount').value, cause}, 'Fund created', result => `${escapeHtml(cause)} · Manager: ${escapeHtml(accountName(result.manager))}`);
     }
-
     async function submitDonation() {
-      const from = document.getElementById("activeAccount").value;
-      const amount = document.getElementById("donateAmount").value;
-      try {
-        const res = await apiCall("/api/donate", "POST", { from, amount });
-        await refreshState();
-        showStatus(
-          true,
-          "Donation Transaction Confirmed",
-          `Donor: <span class="mono">${escapeHtml(res.from)}</span> donated <strong>${escapeHtml(res.amountEth)} ETH</strong><br/>Tx Hash: <span class="mono">${escapeHtml(res.txHash)}</span> (Block #${res.blockNumber})`
-        );
-      } catch (err) {
-        showStatus(
-          false,
-          "Donation Transaction Rejected",
-          `Sender: <span class="mono">${escapeHtml(from)}</span><br/>Error: <strong>${escapeHtml(err.message)}</strong>`
-        );
-      }
+      if (!same($('activeAccount').value, assignedAccount(1)?.address)) return showStatus(false, 'Donor required', 'Select Donor to make a contribution.');
+      if (!amountValid('donateAmount')) return;
+      await transact('/api/donate', {from:$('activeAccount').value, amount:$('donateAmount').value}, 'Thank you for your contribution!', result => `${escapeHtml(accountName(result.from))} contributed <strong>${escapeHtml(result.amountEth)} ETH</strong>. The transaction is confirmed and recorded in the history.`);
     }
-
     async function submitSpend() {
-      const from = document.getElementById("activeAccount").value;
-      const recipient = document.getElementById("spendRecipient").value.trim();
-      const amount = document.getElementById("spendAmount").value;
-      const purpose = document.getElementById("spendPurpose").value.trim();
-      try {
-        const res = await apiCall("/api/spend", "POST", { from, recipient, amount, purpose });
-        await refreshState();
-        showStatus(
-          true,
-          "Expense Recorded & Funds Transferred",
-          `Manager: <span class="mono">${escapeHtml(res.from)}</span> sent <strong>${escapeHtml(res.amountEth)} ETH</strong> to <span class="mono">${escapeHtml(res.recipient)}</span><br/>Purpose: ${escapeHtml(res.purpose)}<br/>Tx Hash: <span class="mono">${escapeHtml(res.txHash)}</span> (Block #${res.blockNumber})`
-        );
-      } catch (err) {
-        showStatus(
-          false,
-          "Spending Transaction Rejected by Smart Contract",
-          `Caller: <span class="mono">${escapeHtml(from)}</span><br/>Reason: <strong>${escapeHtml(err.message)}</strong><br/>On-chain state and contract balance remain unchanged.`
-        );
-      }
+      if (!same($('activeAccount').value, assignedAccount(0)?.address) || !same($('activeAccount').value, appState?.summary?.manager)) return showStatus(false, 'Manager required', 'Select the assigned Manager to continue.');
+      if (!amountValid('spendAmount')) return;
+      const recipient = assignedAccount(2)?.address || '';
+      const amount = $('spendAmount').value;
+      const purpose = $('spendPurpose').value.trim();
+      if (!/^0x[a-fA-F0-9]{40}$/.test(recipient) || /^0x0{40}$/i.test(recipient)) return showStatus(false, 'Recipient unavailable', 'The fixed Recipient account must be available before sending a payment.');
+      if (!purpose) return showStatus(false, 'Expense purpose required', 'Describe the expense so contributors can follow how funds are used.');
+      if (Number(amount) > Number(appState.summary.balanceEth)) return showStatus(false, 'Insufficient fund balance', 'The expense must not exceed the available balance.');
+      await transact('/api/spend', {from:$('activeAccount').value, recipient, amount, purpose}, 'Expense recorded', result => `Sent <strong>${escapeHtml(result.amountEth)} ETH</strong> to ${escapeHtml(accountName(result.recipient))}.<br>Purpose: ${escapeHtml(result.purpose)}`);
     }
-
-    refreshState().catch(err => showStatus(false, "Connection Error", escapeHtml(err.message)));
+    for (const name of ['loadExistingContract','deployNewContract','submitDonation','submitSpend','refreshDashboard']) {
+      const action = window[name];
+      window[name] = async function() {
+        if (busy) return;
+        busy = true;
+        const controls = [...document.querySelectorAll('button, input, select')];
+        controls.forEach(el => el.disabled = true);
+        $('main').setAttribute('aria-busy','true');
+        const box = $('txStatusBox');
+        box.className = 'alert warn';
+        box.textContent = 'Processing… Please wait for confirmation.';
+        try { await action(); if (box.textContent.startsWith('Processing…')) box.className = 'alert'; }
+        finally {
+          busy = false;
+          controls.forEach(el => el.disabled = false);
+          $('main').setAttribute('aria-busy','false');
+          updateRoleUI();
+        }
+      };
+    }
+    setDonation($('donateAmount').value);
+    refreshDashboard();
   </script>
 </body>
 </html>
@@ -1417,7 +1402,7 @@ def run_automated_tests(service: LedgerService) -> None:
     assert donate_info["events"][0]["event"] == "DonationReceived"
     print(f"[PASS] Test 2 - Donate 2 ETH (Account #1 -> Contract)")
     print(f"       Tx: {donate_info['txHash']} | Event: {donate_info['events'][0]['event']}")
-    print(f"       Updated Contract Balance: {state['summary']['balanceEth']} ETH")
+    print(f"       Updated Available balance: {state['summary']['balanceEth']} ETH")
 
     # Test 3: Rejected zero donation
     zero_rejected = False
@@ -1461,7 +1446,7 @@ def run_automated_tests(service: LedgerService) -> None:
     assert spend_info["events"][0]["event"] == "ExpenseRecorded"
     print(f"[PASS] Test 5 - Valid Manager Expense 0.5 ETH (Account #0 -> Account #2)")
     print(f"       Tx: {spend_info['txHash']} | Event: {spend_info['events'][0]['event']}")
-    print(f"       Recorded Purpose: '{state['expenses'][0]['purpose']}' | Contract Balance: {state['summary']['balanceEth']} ETH")
+    print(f"       Recorded Purpose: '{state['expenses'][0]['purpose']}' | Available balance: {state['summary']['balanceEth']} ETH")
 
     # Test 6: Rejected overspend exceeding contract balance
     overspend_rejected = False

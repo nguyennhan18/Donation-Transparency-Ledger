@@ -43,11 +43,22 @@ donation-transparency-ledger/
    cd donation-transparency-ledger
    ../.venv/bin/python app.py
    ```
-3. Open `http://127.0.0.1:8000` in your browser:
-   - Either select **Account #0**, enter a cause name, and click **Deploy Contract**,
-   - **Or** deploy `DonationTransparencyLedger.sol` via **Remix IDE** (*Custom - External Http Provider* `http://127.0.0.1:7545`), paste the deployed address into **Deployed Contract Address**, and click **Load Contract**.
-     *(Note for Ganache v7.7.3: in Remix, use Solidity `0.8.19` or set EVM Version to `paris` under Advanced Configurations so `PUSH0` is not emitted.)*
-4. Switch between Ganache accounts in the dropdown to demonstrate **Donate** (Account #1), **Unauthorized Spend Rejection** (Account #1), and **Valid Manager Spend** (Account #0 -> Account #2).
+3. Open `http://127.0.0.1:8000`. All interface labels, instructions, and system messages are in English.
+   - Select **Manager**, open **Fund settings → Create a new fund**, enter a fund name, and click **Create fund**.
+   - Or enter an existing contract address in **Fund settings** and click **Connect fund**.
+   - For Ganache v7.7.3, use Solidity `0.8.19` or EVM version `paris` in Remix.
+4. The interface has three fixed, non-editable account identities:
+
+   | Display name | Ganache account | Interface actions |
+   |---|---|---|
+   | Manager | #0 | Create funds and record expenses |
+   | Donor | #1 | Make contributions |
+   | Recipient | #2 | Receive payments and view fund activity |
+
+   Account selectors, history, and confirmations show names instead of wallet addresses. Previous browser-saved aliases are ignored. Other historical participants retain neutral account or guest labels.
+5. Select **Donor** and click **Donate now** to contribute. Select **Manager**, enter an expense amount and purpose, and click **Confirm expense** to pay the fixed **Recipient**. The recipient cannot be changed in this interface.
+6. The interface checks the loaded contract's actual manager. If it differs from account #0, expenses are disabled and a warning explains how to connect a compatible fund. Missing assigned accounts also produce a warning.
+7. Use **Refresh** to update balances and history. Duplicate submissions are blocked while processing; a refresh failure after a confirmed transaction does not prompt another payment. These role assignments govern the demo interface; the contract retains its original public-donation and manager-only spending rules. Existing fund names and expense descriptions are displayed as recorded on-chain.
 
 ### Option B: Run the Automated Test Suite
 ```bash
