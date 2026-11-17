@@ -68,13 +68,24 @@ Running `../.venv/bin/python app.py --test` against local Ganache (`Chain ID: 13
 | 6 | Overspend (`10 ETH > 1.5 ETH`) | Account #0 | **PASS (Rejected)** — Reverted: `Insufficient contract balance` | Contract checks `address(this).balance >= _amount` on-chain to prevent overdrawing. |
 
 ## 8. Demonstration Screenshots
-Place captured screenshots in `screenshots/` (for example):
-- `screenshots/01_ganache_accounts.png` — Ganache RPC & test accounts
-- `screenshots/02_deploy_contract.png` — Contract deployment by Manager (`Account #0`)
-- `screenshots/03_donate_success.png` — Successful donation by `Account #1`
-- `screenshots/04_non_manager_rejected.png` — Rejected spending attempt by `Account #1`
-- `screenshots/05_manager_spend_success.png` — Valid spending by `Account #0` showing stored amount & purpose
-- `screenshots/06_automated_tests.png` — Terminal output of `app.py --test`
+
+### 1. Ganache RPC & Test Accounts
+![Ganache RPC & Test Accounts](screenshots/01_ganache_accounts.png)
+
+### 2. Contract Deployment by Manager (`Account #0`)
+![Contract Deployment by Manager](screenshots/02_deploy_contract.png)
+
+### 3. Successful Donation (`2 ETH`) by `Account #1`
+![Successful Donation by Account #1](screenshots/03_donate_success.png)
+
+### 4. Rejected Unauthorized Spending Attempt by `Account #1`
+![Rejected Spending Attempt by Account #1](screenshots/04_non_manager_rejected.png)
+
+### 5. Valid Manager Spending (`Account #0` -> `Account #2`) with Stored Purpose
+![Valid Manager Spending by Account #0](screenshots/05_manager_spend_success.png)
+
+### 6. Automated Test Suite Output (`python app.py --test`)
+![Automated Test Suite Output](screenshots/06_automated_tests.png)
 
 ## 9. Citations & Assistance
 - [Web3.py Documentation](https://web3py.readthedocs.io/) for Python JSON-RPC interaction, contract deployment, receipt event decoding, and transaction handling.
